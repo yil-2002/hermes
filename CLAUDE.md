@@ -1,7 +1,7 @@
 # Hermes
 
 Umumiy routing qoidalari (S/A/B/C, `dirijyor:scout` / `dirijyor:builder` / `dirijyor:bulk-worker`)
-`dirijyor` plugin'idan keladi: https://github.com/yil-2002/dirijyor — bu yerda faqat loyihaga xos ma'lumot.
+`dirijyor` plugin'idan keladi: https://github.com/yil-2002/agent — bu yerda faqat loyihaga xos ma'lumot.
 
 ## Loyiha
 Telegram orqali ishlaydigan AI agent (J.A.R.V.I.S. persona), aiohttp asosida.

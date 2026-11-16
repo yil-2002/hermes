@@ -3,7 +3,7 @@
   "model": "opus",
   "extraKnownMarketplaces": {
     "dirijyor": {
-      "source": { "source": "github", "repo": "yil-2002/dirijyor" }
+      "source": { "source": "github", "repo": "yil-2002/agent" }
     }
   },
   "enabledPlugins": {

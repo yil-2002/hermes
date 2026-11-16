@@ -36,16 +36,16 @@ Claude Code uchun ko'p modelli agent tizimi. **Opus** dirijyor bo'lib ishlaydi: 
 3. DeepSeek natijasidan Opus **har doim namuna olib tekshiradi**.
 4. Subagent 2 marta xato qilsa, vazifa bir daraja yuqoriga ko'tariladi (C → A → S).
 
-To'liq qoidalar: [dirijyor/rules/routing.md](https://github.com/yil-2002/dirijyor/blob/main/rules/routing.md).
+To'liq qoidalar: [agent/rules/routing.md](https://github.com/yil-2002/agent/blob/main/rules/routing.md).
 
 ## ⚙️ O'rnatish
 
-Agentlar va routing qoidalari [`yil-2002/dirijyor`](https://github.com/yil-2002/dirijyor) plugin'ida.
+Agentlar va routing qoidalari [`yil-2002/agent`](https://github.com/yil-2002/agent) plugin'ida.
 Bu repodagi `.claude/settings.json` uni avtomatik ulaydi: repo Claude Code'da ochilganda plugin'ni
 o'rnatish taklif qilinadi (`dirijyor@dirijyor`). Qo'lda o'rnatish:
 
 ```bash
-claude plugin marketplace add yil-2002/dirijyor
+claude plugin marketplace add yil-2002/agent
 claude plugin install dirijyor@dirijyor
 ```
 
