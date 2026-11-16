@@ -26,9 +26,9 @@ Claude Code uchun ko'p modelli agent tizimi. **Opus** dirijyor bo'lib ishlaydi: 
 | Daraja | Model | Agent | Qanday vazifalar |
 |---|---|---|---|
 | **S — qiyin** | Opus | — (dirijyorning o'zi) | Arxitektura, murakkab mantiq, nozik bug'lar, xavfsizlik, yakuniy review |
-| **A — o'rta** | Sonnet | `builder` | Oddiy feature, aniq spetsifikatsiya bo'yicha kod, o'rta bug'lar |
-| **B — oson** | Haiku | `scout` | Qidiruv, o'qish, xulosa, log tahlili |
-| **C — ommaviy** | DeepSeek Flash | `bulk-worker` | Ko'p fayldagi takroriy ish, boilerplate, testlar, tarjima |
+| **A — o'rta** | Sonnet | `dirijyor:builder` | Oddiy feature, aniq spetsifikatsiya bo'yicha kod, o'rta bug'lar |
+| **B — oson** | Haiku | `dirijyor:scout` | Qidiruv, o'qish, xulosa, log tahlili |
+| **C — ommaviy** | DeepSeek Flash | `dirijyor:bulk-worker` | Ko'p fayldagi takroriy ish, boilerplate, testlar, tarjima |
 
 **Asosiy qoidalar:**
 1. Vazifa 2–3 qadamdan kichik bo'lsa, Opus uni **o'zi bajaradi**.
@@ -36,19 +36,23 @@ Claude Code uchun ko'p modelli agent tizimi. **Opus** dirijyor bo'lib ishlaydi: 
 3. DeepSeek natijasidan Opus **har doim namuna olib tekshiradi**.
 4. Subagent 2 marta xato qilsa, vazifa bir daraja yuqoriga ko'tariladi (C → A → S).
 
-To'liq qoidalar: [`CLAUDE.md`](CLAUDE.md).
+To'liq qoidalar: [dirijyor/rules/routing.md](https://github.com/yil-2002/dirijyor/blob/main/rules/routing.md).
 
-## 📁 Tuzilma
+## ⚙️ O'rnatish
+
+Agentlar va routing qoidalari [`yil-2002/dirijyor`](https://github.com/yil-2002/dirijyor) plugin'ida.
+Bu repodagi `.claude/settings.json` uni avtomatik ulaydi: repo Claude Code'da ochilganda plugin'ni
+o'rnatish taklif qilinadi (`dirijyor@dirijyor`). Qo'lda o'rnatish:
+
+```bash
+claude plugin marketplace add yil-2002/dirijyor
+claude plugin install dirijyor@dirijyor
+```
 
 ```
 .
-├── CLAUDE.md                  # Dirijyor ko'rsatmalari + loyiha xaritasi
-├── .claude/
-│   ├── settings.json          # Asosiy model: opus; .env/memory.db o'qish taqiqlangan
-│   └── agents/
-│       ├── scout.md           # Haiku — qidiruv / o'qish (faqat o'qish)
-│       ├── builder.md         # Sonnet — o'rta ishlar
-│       └── bulk-worker.md     # Haiku koordinator → DeepSeek MCP
+├── CLAUDE.md                  # Hermes'ga xos ma'lumot: fayl xaritasi, tekshirish
+├── .claude/settings.json      # model: opus; dirijyor plugin; .env/memory.db o'qish taqiqlangan
 ├── server.py, voice.py
 ├── hermes/                    # orchestrator, config, memory, telegram, documents
 ├── prompts/
@@ -56,40 +60,7 @@ To'liq qoidalar: [`CLAUDE.md`](CLAUDE.md).
 └── .env.example               # Hermes bot sozlamalari
 ```
 
-## ⚙️ O'rnatish
-
-### 1. Talablar
-- [Claude Code](https://docs.claude.com/en/docs/claude-code) (Max/Pro obuna yoki API kalit)
-- Python 3.10–3.12 (DeepSeek MCP server uchun)
-- DeepSeek API kalit: https://platform.deepseek.com
-
-### 2. DeepSeek subagentni o'rnatish
-[PsChina/deepseek-as-subagent](https://github.com/PsChina/deepseek-as-subagent):
-```bash
-git clone https://github.com/PsChina/deepseek-as-subagent
-cd deepseek-as-subagent
-# install.sh va requirements.lock ni ko'rib chiqing, so'ng:
-./install.sh
-```
-`install.sh` MCP serverni Claude Code'ga **o'zi ro'yxatdan o'tkazadi** — shuning uchun bu repoda `.mcp.json` yo'q.
-
-API kalit loyihaning `.env` fayliga emas, `~/.deepseek-mcp/config.json` ga yoziladi (Windows'da `DEEPSEEK_API_KEY` env o'zgaruvchisi):
-```json
-{
-  "api_key": "sk-...",
-  "flash": "deepseek-flash",
-  "pro": "deepseek-v4-pro"
-}
-```
-> ⚠️ Bu loyiha yangi. O'rnatishdan oldin kodini ko'rib chiqing. DeepSeek coding rejimida Bash'ni sizning kompyuteringizda ishga tushiradi (OS sandbox emas).
-
-### 3. Claude Code'ni ishga tushirish
-```bash
-cd hermes
-claude
-```
-Ichkarida `/agents` bilan `scout`, `builder`, `bulk-worker` ko'rinishini, `/mcp` bilan DeepSeek server ulanganini tekshiring.
-DeepSeek'ni bir sessiyada o'chirish: `DEEPSEEK_MODE=off claude`.
+DeepSeek o'rnatish — plugin README'sida.
 
 ## ✅ Tekshirish
 
@@ -109,6 +80,7 @@ Kutilgan natija: `haiku`, `sonnet` va `opus` modellari aralash ko'rinadi.
 ## 🗺️ Yo'l xaritasi
 
 - [x] Asosiy skelet: Opus + Sonnet + Haiku agentlar
+- [x] Umumiy qismni `dirijyor` plugin'iga ajratish
 - [ ] DeepSeek MCP integratsiyasi (o'rnatish va sinab ko'rish)
 - [ ] Routing statistikasi (qaysi model qancha ishladi)
 - [ ] Avtomatik qiyinlik klassifikatori (RouteLLM g'oyasi asosida)

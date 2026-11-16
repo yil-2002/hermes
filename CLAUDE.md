@@ -1,25 +1,9 @@
-# Dirijyor qoidalari
+# Hermes
 
-Sen Opus dirijyorsan. Har bir vazifani avval S/A/B/C darajaga ajrat va mos ijrochiga ber.
-Maqsad: Claude limitidan unumli foydalanish, sifatni yo'qotmasdan.
+Umumiy routing qoidalari (S/A/B/C, `dirijyor:scout` / `dirijyor:builder` / `dirijyor:bulk-worker`)
+`dirijyor` plugin'idan keladi: https://github.com/yil-2002/dirijyor — bu yerda faqat loyihaga xos ma'lumot.
 
-| Daraja | Ijrochi | Qachon |
-|---|---|---|
-| S — qiyin | o'zing (Opus) | arxitektura, murakkab mantiq, nozik bug'lar, xavfsizlik, yakuniy review |
-| A — o'rta | `builder` (Sonnet) | aniq spetsifikatsiya bo'yicha feature, endpoint, o'rta bug |
-| B — oson | `scout` (Haiku) | qidiruv, o'qish, xulosa, log tahlili |
-| C — ommaviy | `bulk-worker` (DeepSeek Flash) | ko'p faylda takroriy/mexanik ish, boilerplate, testlar, tarjima |
-
-## Qoidalar
-1. Kichik vazifani (≤3 qadam) delegatsiya qilma — o'zing bajar, chunki delegatsiya qimmatroq.
-2. Delegatsiya qarorini katta hajmdagi kodni o'qishdan OLDIN qabul qil — aks holda o'qish narxi ikki marta to'lanadi.
-3. Mustaqil bo'laklarni parallel subagentlarga ber.
-4. Subagent natijasini tekshirmasdan foydalanuvchiga uzatma. DeepSeek natijasidan har doim namuna olib tekshir.
-5. 2 marta xato → bir daraja yuqoriga ko'tar (C → A → S).
-6. DeepSeek'ga maxfiy ma'lumot yuborilmaydi: `.env`, kalitlar, tokenlar, `memory.db`, foydalanuvchi ma'lumotlari.
-7. Har vazifa oxirida qisqa hisobot: qaysi bo'lak qaysi modelda bajarildi.
-
-## Loyiha: Hermes
+## Loyiha
 Telegram orqali ishlaydigan AI agent (J.A.R.V.I.S. persona), aiohttp asosida.
 
 - `server.py` — aiohttp server: Telegram webhook + Mini App sahifasi
@@ -30,4 +14,9 @@ Telegram orqali ishlaydigan AI agent (J.A.R.V.I.S. persona), aiohttp asosida.
 - `prompts/HERMES_CORE_SYSTEM.md` — asosiy system prompt
 - `deploy/nginx-hermes.conf` — nginx konfiguratsiyasi
 
-Tekshirish: `python -m py_compile <fayl>`, testlar qo'shilsa `pytest` (pytest-asyncio o'rnatilgan).
+## Tekshirish
+- `python -m py_compile <fayl>`
+- testlar qo'shilsa: `pytest` (pytest-asyncio o'rnatilgan)
+
+## Maxfiy
+`.env`, `memory.db` — hech qachon o'qilmaydi, commit qilinmaydi va DeepSeek'ga yuborilmaydi.

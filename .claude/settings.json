@@ -1,6 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "model": "opus",
+  "extraKnownMarketplaces": {
+    "dirijyor": {
+      "source": { "source": "github", "repo": "yil-2002/dirijyor" }
+    }
+  },
+  "enabledPlugins": {
+    "dirijyor@dirijyor": true
+  },
   "permissions": {
     "deny": [
       "Read(./.env)",
