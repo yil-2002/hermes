@@ -26,9 +26,9 @@ Claude Code uchun ko'p modelli agent tizimi. **Opus** dirijyor bo'lib ishlaydi: 
 | Daraja | Model | Agent | Qanday vazifalar |
 |---|---|---|---|
 | **S — qiyin** | Opus | — (dirijyorning o'zi) | Arxitektura, murakkab mantiq, nozik bug'lar, xavfsizlik, yakuniy review |
-| **A — o'rta** | Sonnet | `dirijyor:builder` | Oddiy feature, aniq spetsifikatsiya bo'yicha kod, o'rta bug'lar |
-| **B — oson** | Haiku | `dirijyor:scout` | Qidiruv, o'qish, xulosa, log tahlili |
-| **C — ommaviy** | DeepSeek Flash | `dirijyor:bulk-worker` | Ko'p fayldagi takroriy ish, boilerplate, testlar, tarjima |
+| **A — o'rta** | Sonnet | `builder` | Oddiy feature, aniq spetsifikatsiya bo'yicha kod, o'rta bug'lar |
+| **B — oson** | Haiku | `scout` | Qidiruv, o'qish, xulosa, log tahlili |
+| **C — ommaviy** | DeepSeek Flash | `bulk-worker` | Ko'p fayldagi takroriy ish, boilerplate, testlar, tarjima |
 
 **Asosiy qoidalar:**
 1. Vazifa 2–3 qadamdan kichik bo'lsa, Opus uni **o'zi bajaradi**.
@@ -40,19 +40,21 @@ To'liq qoidalar: [agent/rules/routing.md](https://github.com/yil-2002/agent/blob
 
 ## ⚙️ O'rnatish
 
-Agentlar va routing qoidalari [`yil-2002/agent`](https://github.com/yil-2002/agent) plugin'ida.
-Bu repodagi `.claude/settings.json` uni avtomatik ulaydi: repo Claude Code'da ochilganda plugin'ni
-o'rnatish taklif qilinadi (`dirijyor@dirijyor`). Qo'lda o'rnatish:
+Agentlar (`.claude/agents/`) va routing qoidalari (`.claude/rules/dirijyor-routing.md`)
+[`yil-2002/agent`](https://github.com/yil-2002/agent) dan nusxalangan, shuning uchun ular bulut sessiyalarida ham,
+kompyuterda ham repo ochilishi bilan ishlaydi. Yangilash:
 
 ```bash
-claude plugin marketplace add yil-2002/agent
-claude plugin install dirijyor@dirijyor
+/yo'l/agent/scripts/install-to-repo.sh .
 ```
 
 ```
 .
 ├── CLAUDE.md                  # Hermes'ga xos ma'lumot: fayl xaritasi, tekshirish
-├── .claude/settings.json      # model: opus; dirijyor plugin; .env/memory.db o'qish taqiqlangan
+├── .claude/
+│   ├── settings.json          # model: opus; .env/memory.db o'qish taqiqlangan
+│   ├── agents/                # scout, builder, bulk-worker (agent repodan nusxa)
+│   └── rules/dirijyor-routing.md
 ├── server.py, voice.py
 ├── hermes/                    # orchestrator, config, memory, telegram, documents
 ├── prompts/
